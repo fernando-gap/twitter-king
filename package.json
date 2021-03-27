@@ -1,0 +1,20 @@
+{
+  "name": "twwk",
+  "version": "0.0.1",
+  "description": "Simple API to manipulate twitter Oauth 1.0a through twurl CLI",
+  "main": "src/twitt.js",
+  "scripts": {
+    "start": "node src/twitt.js"
+  },
+  "keywords": [
+    "twitter",
+    "Oauth-1.0a",
+    "simple",
+    "cli"
+  ],
+  "author": "Fernando",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "> 7.23.0 || <= 7.23.0"
+  }
+}
