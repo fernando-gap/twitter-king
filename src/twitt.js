@@ -29,7 +29,8 @@ async function twitt(options, hostF = 'api.twitter.com') {
 		const host = hostF || hostO;
 
 		// makes the request
-		const request = await shell('../bin/twurl', ['-H', `${host}`,'-X', `${method}`, `${path}`]);
+		const request = await shell(`${process.env.PWD}/node_modules/twwk/bin/twurl`, [
+		'-H', `${host}`,'-X', `${method}`, `${path}`]);
 
 		if (request.stdout.substr(0, 7) === 'Invalid') {
 			throw new Error('Invalid URI detected\n');
