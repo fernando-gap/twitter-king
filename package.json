@@ -1,7 +1,7 @@
 {
   "name": "twwk",
   "version": "1.1.0",
-  "description": "Simple API to manipulate twitter Oauth 1.0a through twurl CLI",
+  "description": "A simple API to manipulate twitter requests Oauth 1.0a through twurl.",
   "main": "src/twitt.js",
   "scripts": {
     "start": "node src/twitt.js"
@@ -15,6 +15,6 @@
   "author": "Fernando",
   "license": "ISC",
   "devDependencies": {
-    "eslint": "> 7.23.0 || <= 7.23.0"
+    "eslint": "> 7.23.0 || < 7.23.0"
   }
 }
