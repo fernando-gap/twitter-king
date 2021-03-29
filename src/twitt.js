@@ -1,43 +1,44 @@
 'use strict';
 
-const { execFile } = require('child_process');
+const { exec } = require('child_process');
 const util = require('util');
 
+
+const {
+	removeUndefinedProperties,
+	setOptions,
+	formArguments,
+	makeJson
+} = require('../utils/to_polish.js')
+
+
 // transform our sh in a promise
-const shell = util.promisify(execFile);
+const shell = util.promisify(exec);
 
 /**
  * Make a request across the twurl
  *
  * @param {Object} options
  * @param {String} hostF
- * return {Promise}
+ * return {Promise} request
  */
 
-async function twitt(options, hostF = 'api.twitter.com') {
-	const opts = JSON.stringify(options) === '{}'
-		? new Error('No options are passed'): options;
+async function twitt(options) {
 
-	// verify if options are passed
-	if (opts instanceof Error) {
-		console.log(opts.message);
+	if (JSON.stringify(options) === '{}') {
+		throw new Error('No options are passed!');
 	}
-	else {
-		const { method, path, host: hostO} = opts;
+	
+	const args = (removeUndefinedProperties(
+		setOptions(options)
+	));
 
-		// verify whether is valid
-		const host = hostF || hostO;
+	const make = formArguments(args);
+	const request = await shell(`twurl ${make}`);	
 
-		// makes the request
-		const request = await shell(`${process.env.PWD}/node_modules/twwk/bin/twurl`, [
-		'-H', `${host}`,'-X', `${method}`, `${path}`]);
-
-		if (request.stdout.substr(0, 7) === 'Invalid') {
-			throw new Error('Invalid URI detected\n');
-		}
-		
-		return request;
-	}
+	// add the option to transform data into json
+	request.json = makeJson;
+	return request;
 }
 
 module.exports = twitt;
